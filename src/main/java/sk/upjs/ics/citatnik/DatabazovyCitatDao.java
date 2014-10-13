@@ -2,7 +2,6 @@ package sk.upjs.ics.citatnik;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.util.List;
-import java.util.Random;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -21,7 +20,6 @@ public class DatabazovyCitatDao implements CitatDao {
         jdbcTemplate.setDataSource(datovyZdroj);
     }
     
-    
     @Override
     public Citat findById(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -38,13 +36,11 @@ public class DatabazovyCitatDao implements CitatDao {
     }
 
     @Override
-    public Citat dajNahodnyCitat() {
-        int pocetCitatov = count();
-        int nahodnyIndex = (int) (Math.random() * pocetCitatov);
-        String sql = "SELECT * FROM citat LIMIT " + nahodnyIndex + ", 1";
-        
+    public List<Citat> dajVsetky() {
+        String sql = "SELECT * FROM citat ORDER BY id";
         BeanPropertyRowMapper mapovac = BeanPropertyRowMapper.newInstance(Citat.class);
-        return (Citat) jdbcTemplate.queryForObject(sql, mapovac);
+        return jdbcTemplate.query(sql, mapovac);
     }
+    
     
 }

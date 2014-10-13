@@ -1,5 +1,7 @@
 package sk.upjs.ics.citatnik;
 
+import java.util.List;
+
 public interface CitatDao {
     
     Citat findById(Long id);
@@ -7,7 +9,6 @@ public interface CitatDao {
     void save(Citat citat);
 
     int count();
-
-    Citat dajNahodnyCitat();
     
+    List<Citat> dajVsetky();    
 }

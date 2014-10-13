@@ -10,7 +10,7 @@ package sk.upjs.ics.citatnik;
  * @author rn
  */
 public class MainForm extends javax.swing.JFrame {
-    private CitatDao citatDao = new DatabazovyCitatDao();
+    private CitatGenerator citatGenerator = new SekvencnyGeneratorCitatov();
     
     /**
      * Creates new form NewJFrame
@@ -18,12 +18,15 @@ public class MainForm extends javax.swing.JFrame {
     public MainForm() {
         initComponents();
         
-        Citat citat = citatDao.dajNahodnyCitat();
+        zobrazNahodnyCitat();
+    }
+
+    private void zobrazNahodnyCitat() {
+        Citat citat = citatGenerator.generuj();
         if(citat != null) {
             lblText.setText(citat.getText());
             lblAutor.setText(citat.getAutor());
         }
-        
     }
 
     /**
@@ -37,6 +40,7 @@ public class MainForm extends javax.swing.JFrame {
 
         lblText = new javax.swing.JLabel();
         lblAutor = new javax.swing.JLabel();
+        btnDalsiCitat = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,18 +49,32 @@ public class MainForm extends javax.swing.JFrame {
 
         lblAutor.setText("-- Shakespeare");
 
+        btnDalsiCitat.setText(">");
+        btnDalsiCitat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDalsiCitatActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblAutor)
-                .addGap(8, 8, 8))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblText, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblText, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblAutor)
+                                .addGap(8, 8, 8))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnDalsiCitat)
+                                .addContainerGap())))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -65,11 +83,17 @@ public class MainForm extends javax.swing.JFrame {
                 .addComponent(lblText)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblAutor)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnDalsiCitat)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnDalsiCitatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDalsiCitatActionPerformed
+        zobrazNahodnyCitat();
+    }//GEN-LAST:event_btnDalsiCitatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -108,6 +132,7 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDalsiCitat;
     private javax.swing.JLabel lblAutor;
     private javax.swing.JLabel lblText;
     // End of variables declaration//GEN-END:variables
